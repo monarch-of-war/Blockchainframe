@@ -26,13 +26,3 @@ fn hash_pair(left: &Hash, right: &Hash) -> Hash{
 	combined.extend_from_slice(right);
 	hash_sha256(&combined)
 }
-
-
-
-struct Block{
-	index: u64,
-	timestamp: u64,
-	merkle_root: String,
-	previous_hash: String,
-	nonce: u64,
-}

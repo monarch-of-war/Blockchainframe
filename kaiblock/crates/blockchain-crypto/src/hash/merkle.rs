@@ -1,12 +1,6 @@
-
-use crate::block::hash_pair;
-
 pub type Hash = [u8; 32];
 
-
 #[derive(debug, Clone)]
-
-
 // recursive structure of a node in merkle tree
 pub enum MerkleNode {
 
