@@ -1,6 +1,6 @@
-mod merkle;
-mod utils;
-mod sha256;
+pub mod merkle;
+pub mod utils;
+pub mod sha256;
 
 pub use merkle::*;
 pub use utils::*;

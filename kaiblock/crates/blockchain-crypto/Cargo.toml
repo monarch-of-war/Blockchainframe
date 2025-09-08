@@ -8,3 +8,5 @@ ed25519-dalek = "1"
 rand = "0.8"
 num-bigint = "0.4"
 hex = "0.4"
+serde.workspace = true
+sha2.workspace = true

@@ -1,6 +1,6 @@
 use hex;
 
-struct Hash([u8; 32]);
+pub struct Hash([u8; 32]);
 
 impl Hash {
     fn bin_to_hex(&self) -> String {

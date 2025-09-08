@@ -1,11 +1,12 @@
-pub struct Keypair {
-    pub public: PublicKey,
-    pub private: PrivateKey,
-}
-use ed25519_dalek::{Keypair, PublicKey, SecretKey, SIGNATURE_LENGTH, KEYPAIR_LENGTH};
+use ed25519_dalek::{Keypair as DalekKeypair, PublicKey, SecretKey};
 use rand::rngs::OsRng;
 
-pub fn generate_keypair() -> Keypair {
-    let mut csprng = OsRng;
-    Keypair::generate(&mut csprng)
+pub struct MyKeypair {
+    pub public: PublicKey,
+    pub private: SecretKey,
+}
+
+pub fn generate_keypair() -> DalekKeypair {
+    let mut csprng = OsRng{};
+    DalekKeypair::generate(&mut csprng)
 }

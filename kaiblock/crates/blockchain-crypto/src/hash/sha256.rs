@@ -1,6 +1,5 @@
-use serde::{Serialize, Deserialize};
-use hex;
 use sha2::{Sha256, Digest};
+use crate::hash::merkle::Hash;
 
 
 // take in a slice of bytes &[u8], computes the sha-256 hash of the data
