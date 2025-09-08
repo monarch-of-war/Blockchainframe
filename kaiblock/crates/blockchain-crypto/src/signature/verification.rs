@@ -1,8 +1,10 @@
-use super::{PublicKey, Signature};
+use ed25519_dalek::{PublicKey, Signature, Verifier};
 
-pub fn verify(message: &[u8], signature: &Signature, public_key: &PublicKey) -> Result<bool, VerificationError> {
-    // Placeholder for actual verification logic
-    // In a real implementation, this would involve cryptographic checks
-    message.len() > 0 && signature.0.len() == 64 && public_key.0.len() == 32
+pub fn verify_signature(
+    public_key: &PublicKey,
+    message: &[u8],
+    signature: &Signature,
+) -> bool {
+    public_key.verify(message, signature).is_ok()
 }
 

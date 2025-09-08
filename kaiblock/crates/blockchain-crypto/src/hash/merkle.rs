@@ -1,4 +1,4 @@
-pub type Hash = [u8; 32];
+struct Hash([u8; 32]);
 
 #[derive(debug, Clone)]
 // recursive structure of a node in merkle tree
@@ -201,4 +201,9 @@ impl MerkleProof{
         // Final hash should match the root
         current_hash == self.hash
     }
+}
+
+fn main() {
+    let mori = hex_to_bin("4a656665").unwrap();
+    println!("Binary: {:?}", mori);
 }
