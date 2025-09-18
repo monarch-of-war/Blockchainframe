@@ -1,6 +1,28 @@
 [package]
 name = "blockchain-cli"
 version = "0.1.0"
-edition = "2024"
+edition = "2021"
+
+# This creates the binary executable
+[[bin]]
+name = "blockchain-node"
+path = "src/main.rs"
+
+# You can have multiple binaries in one crate
+[[bin]]
+name = "blockchain-miner"  
+path = "src/miner_main.rs"
 
 [dependencies]
+# Import all the library crates
+blockchain-core = { path = "../blockchain-core" }
+blockchain-crypto = { path = "../blockchain-crypto" }
+blockchain-network = { path = "../blockchain-network" }
+blockchain-consensus = { path = "../blockchain-consensus" }
+blockchain-storage = { path = "../blockchain-storage" }
+blockchain-rpc = { path = "../blockchain-rpc" }
+blockchain-wallet = { path = "../blockchain-wallet" }
+
+# CLI-specific dependencies
+clap = { workspace = true }
+tokio = { workspace = true }

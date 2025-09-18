@@ -1,0 +1,16 @@
+[package]
+name = "runtime"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+borsh = "0.10"
+borsh-derive = "0.10"
+thiserror = "1.0"
+log = "0.4"
+
+# local workspace dependency to the bank crate you already created
+bank = { path = "../bank" }
+
+[dev-dependencies]
+rand = "0.8"

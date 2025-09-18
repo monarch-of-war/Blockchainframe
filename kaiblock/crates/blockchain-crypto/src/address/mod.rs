@@ -1,34 +1,59 @@
-//! Address generation and management for the blockchain
-//! 
-//! This module provides functionality for:
-//! - Converting public keys to addresses using conversion.rs
-//! - Address validation and verification using validation.rs
-//! - Multiple encoding formats (Base58, Hex) using encoding.rs
-//! - Checksum validation for error detection using validation.rs
+mod address;
+mod types;
 
-pub mod conversion;
-pub mod validation;
-pub mod encoding;
-pub mod types;
+pub use address::Address;
+pub use types::AddressType;
 
-// Re-export the main types and functions for easy access
-pub use types::{Address, AddressType, AddressError};
-pub use conversion::AddressGenerator;
-pub use validation::AddressValidator;
-pub use encoding::{Base58Encoder, HexEncoder};
 
-// Convenient type aliases
-pub type Result<T> = std::result::Result<T, AddressError>;
+use crate::signature::PublicKey;
+use crate::{CryptoError, Result};
 
-// Public API convenience functions
-pub fn generate_address(public_key: &ed25519_dalek::PublicKey) -> Address {
-    AddressGenerator::from_public_key(public_key)
+
+//Generate an addredd from a public key
+pub fn public_key_to_address(public_key: &PublicKey, address_type: AddressType) ->Address{
+	Address::from_public_key(public_key, address_type)
 }
 
-pub fn validate_address(address: &Address) -> bool {
-    AddressValidator::is_valid(address)
+///Validate an address form string
+pub fn validate_address(address_str: &str) -> Result<AddressType> {
+	Address::validate(address_str)
 }
 
-pub fn address_from_string(s: &str) -> Result<Address> {
-    AddressValidator::parse_address(s)
+
+//check validity of an addredd
+pub fn is_valid_address(address_str: &str){
+	Address::validate(address_str).is_ok()
+}
+
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::signature::generate_keypair;
+
+    #[test]
+    fn test_address_generation() {
+        let keypair = generate_keypair();
+        let address = public_key_to_address(keypair.public_key(), AddressType::Base58);
+        
+        assert!(!address.to_string().is_empty());
+        assert!(is_valid_address(&address.to_string()));
+    }
+
+    #[test]
+    fn test_address_validation() {
+        let keypair = generate_keypair();
+        let address = public_key_to_address(keypair.public_key(), AddressType::Base58);
+        let address_str = address.to_string();
+        
+        let addr_type = validate_address(&address_str).unwrap();
+        assert_eq!(addr_type, AddressType::Base58);
+    }
+
+    #[test]
+    fn test_invalid_address() {
+        assert!(!is_valid_address("invalid_address"));
+        assert!(!is_valid_address(""));
+        assert!(!is_valid_address("1234567890"));
+    }
 }

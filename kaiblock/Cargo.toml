@@ -8,7 +8,7 @@ members = [
     "crates/blockchain-rpc",
     "crates/blockchain-cli",
     "crates/blockchain-wallet"
-]
+,   "crates/bank", "crates/runtime"]
 
 [workspace.dependencies]
 # Common dependencies shared across crates
